@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:machine/views/home_view.dart';
 import 'package:pinput/pinput.dart';
 
 class OtpView extends StatelessWidget {
@@ -145,7 +146,12 @@ class OtpView extends StatelessWidget {
                       width: double.infinity,
                       height: 55,
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => HomeView()),
+                          );
+                        },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.black,
                           shape: RoundedRectangleBorder(

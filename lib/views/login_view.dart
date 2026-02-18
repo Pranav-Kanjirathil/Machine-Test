@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:machine/views/otp_view.dart';
 
 class LoginView extends StatelessWidget {
   const LoginView({super.key});
@@ -111,7 +112,12 @@ class LoginView extends StatelessWidget {
                       width: double.infinity,
                       height: 55,
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => OtpView()),
+                          );
+                        },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.black,
                           shape: RoundedRectangleBorder(

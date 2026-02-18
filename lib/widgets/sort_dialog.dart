@@ -15,7 +15,7 @@ class _SortDialogState extends State<SortDialog> {
     return Container(
       width: double.infinity,
 
-      padding: const EdgeInsets.fromLTRB(20, 20, 20, 30),
+      padding: const EdgeInsets.all(20),
 
       decoration: const BoxDecoration(
         color: Colors.white,
