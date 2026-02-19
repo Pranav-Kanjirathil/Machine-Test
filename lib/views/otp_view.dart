@@ -16,11 +16,10 @@ class OtpView extends StatelessWidget {
           children: [
             Expanded(
               child: SingleChildScrollView(
-                padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                padding: EdgeInsets.symmetric(horizontal: 24.0),
                 child: Column(
                   children: [
-                    const SizedBox(height: 40),
-                    // Header Illustration
+                    SizedBox(height: 40),
                     Center(
                       child: SizedBox(
                         height: 180,
@@ -30,8 +29,8 @@ class OtpView extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 40),
-                    const Align(
+                    SizedBox(height: 40),
+                    Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
                         "OTP Verification",
@@ -42,8 +41,8 @@ class OtpView extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 15),
-                    const Text(
+                    SizedBox(height: 15),
+                    Text(
                       "Enter the verification code we just sent to your number +91 *******21.",
                       style: TextStyle(
                         fontSize: 14,
@@ -53,7 +52,7 @@ class OtpView extends StatelessWidget {
                         height: 1.4,
                       ),
                     ),
-                    const SizedBox(height: 30),
+                    SizedBox(height: 30),
 
                     Pinput(
                       length: 6,
@@ -95,28 +94,9 @@ class OtpView extends StatelessWidget {
                         color: Colors.red,
                       ),
                     ),
+
                     SizedBox(height: 25),
-                    // Row(
-                    //   mainAxisAlignment: MainAxisAlignment.center,
-                    //   children: [
-                    //      Text(
-                    //       "Don't Get OTP? ",
-                    //       style: TextStyle(fontFamily: 'font2'),
-                    //     ),
-                    //     GestureDetector(
-                    //       onTap: () {},
-                    //       child: const Text(
-                    //         "Resend",
-                    //         style: TextStyle(
-                    //           color: Colors.blue,
-                    //           fontWeight: FontWeight.bold,
-                    //           fontFamily: 'font2',
-                    //           decoration: TextDecoration.underline,
-                    //         ),
-                    //       ),
-                    //     ),
-                    //   ],
-                    // ),
+
                     RichText(
                       text: TextSpan(
                         children: [
@@ -141,7 +121,9 @@ class OtpView extends StatelessWidget {
                         ],
                       ),
                     ),
+
                     SizedBox(height: 30),
+                    
                     SizedBox(
                       width: double.infinity,
                       height: 55,
