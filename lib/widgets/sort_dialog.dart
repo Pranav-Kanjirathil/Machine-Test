@@ -1,23 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:machine/view_models/user_viewmodel.dart';
+import 'package:provider/provider.dart';
 
-class SortDialog extends StatefulWidget {
+class SortDialog extends StatelessWidget {
   const SortDialog({super.key});
 
   @override
-  State<SortDialog> createState() => _SortDialogState();
-}
-
-class _SortDialogState extends State<SortDialog> {
-  int selectedValue = 0;
-
-  @override
   Widget build(BuildContext context) {
+
+    final vm = Provider.of<UserViewModel>(context);
+
     return Container(
       width: double.infinity,
-
-      padding: EdgeInsets.all(20),
-
-      decoration: BoxDecoration(
+      padding: const EdgeInsets.all(20),
+      decoration: const BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(25),
@@ -28,53 +24,48 @@ class _SortDialogState extends State<SortDialog> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
-
         children: [
-          Text(
+
+          const Text(
             "Sort",
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
+            ),
           ),
 
-          SizedBox(height: 15),
+          const SizedBox(height: 15),
 
           RadioListTile<int>(
             value: 0,
-            groupValue: selectedValue,
+            groupValue: vm.selectedFilter,
             title: const Text("All"),
             onChanged: (value) {
-              setState(() {
-                selectedValue = value!;
-              });
-
-              Navigator.pop(context, selectedValue);
+              vm.filter(value!);
+              Navigator.pop(context);
             },
           ),
 
           RadioListTile<int>(
             value: 1,
-            groupValue: selectedValue,
+            groupValue: vm.selectedFilter,
             title: const Text("Age: Elder"),
             onChanged: (value) {
-              setState(() {
-                selectedValue = value!;
-              });
-
-              Navigator.pop(context, selectedValue);
+              vm.filter(value!);
+              Navigator.pop(context);
             },
           ),
 
           RadioListTile<int>(
             value: 2,
-            groupValue: selectedValue,
+            groupValue: vm.selectedFilter,
             title: const Text("Age: Younger"),
             onChanged: (value) {
-              setState(() {
-                selectedValue = value!;
-              });
-
-              Navigator.pop(context, selectedValue);
+              vm.filter(value!);
+              Navigator.pop(context);
             },
           ),
+
         ],
       ),
     );

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:machine/view_models/user_viewmodel.dart';
+import 'package:provider/provider.dart';
 import 'package:machine/views/login_view.dart';
 
 void main() {
-
   runApp(const MyApp());
 }
 
@@ -11,9 +12,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: LoginView(),
-      debugShowCheckedModeBanner: false,
+
+    return ChangeNotifierProvider(
+      create: (_) => UserViewModel(),
+      child: const MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: LoginView(),
+      ),
     );
+
   }
 }
