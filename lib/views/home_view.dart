@@ -27,7 +27,10 @@ class HomeView extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
+        shape: const CircleBorder(),
         backgroundColor: Colors.black,
+        foregroundColor: Colors.white,
+        elevation: 6,
         child: const Icon(Icons.add),
         onPressed: () async {
           final result = await showDialog(

@@ -12,7 +12,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return ChangeNotifierProvider(
       create: (_) => UserViewModel(),
       child: const MaterialApp(
@@ -20,6 +19,5 @@ class MyApp extends StatelessWidget {
         home: LoginView(),
       ),
     );
-
   }
 }

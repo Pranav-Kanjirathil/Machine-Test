@@ -30,7 +30,7 @@ class UserModel {
       age: json["age"],
       imagePath: json["imagePath"],
       phoneNumber: json["phoneNumber"] ??
-          "", // Handle potential missing field for existing data
+          "",
     );
   }
 }
