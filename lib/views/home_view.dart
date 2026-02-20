@@ -5,8 +5,37 @@ import 'package:machine/widgets/sort_dialog.dart';
 import 'package:machine/models/user_model.dart';
 import 'package:provider/provider.dart';
 
-class HomeView extends StatelessWidget {
+class HomeView extends StatefulWidget {
   const HomeView({super.key});
+
+  @override
+  State<HomeView> createState() => _HomeViewState();
+}
+
+class _HomeViewState extends State<HomeView> {
+  late ScrollController _scrollController;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController = ScrollController();
+    _scrollController.addListener(_onScroll);
+  }
+
+  @override
+  void dispose() {
+    _scrollController.removeListener(_onScroll);
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _onScroll() {
+    if (_scrollController.position.pixels >=
+        _scrollController.position.maxScrollExtent - 300) {
+      final vm = Provider.of<UserViewModel>(context, listen: false);
+      vm.loadMore();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -114,8 +143,20 @@ class HomeView extends StatelessWidget {
                     child: Text("No Users Added"),
                   )
                 : ListView.builder(
-                    itemCount: vm.users.length,
+                    controller: _scrollController,
+                    itemCount: vm.users.length + (vm.hasMore ? 1 : 0),
                     itemBuilder: (context, index) {
+                      if (index == vm.users.length) {
+                        return vm.isLoading
+                            ? const Padding(
+                                padding: EdgeInsets.all(16),
+                                child: Center(
+                                  child: CircularProgressIndicator(),
+                                ),
+                              )
+                            : const SizedBox.shrink();
+                      }
+
                       final user = vm.users[index];
 
                       return Container(

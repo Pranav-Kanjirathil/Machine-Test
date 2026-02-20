@@ -7,6 +7,7 @@ class UserViewModel extends ChangeNotifier {
 
   List<UserModel> _users = [];
   List<UserModel> _displayUsers = [];
+  List<UserModel> _filteredList = [];
 
   int _selectedFilter = 0;
 
@@ -28,7 +29,21 @@ class UserViewModel extends ChangeNotifier {
     _isLoading = true;
     _currentPage = 0;
     _users = await _localService.loadUsers();
-    _applyFilter();
+
+    List<UserModel> filtered = [];
+    if (_selectedFilter == 0) {
+      filtered = List.from(_users);
+      filtered.sort((a, b) => b.age.compareTo(a.age));
+    } else if (_selectedFilter == 1) {
+      filtered = _users.where((u) => u.age >= 60).toList();
+      filtered.sort((a, b) => b.age.compareTo(a.age));
+    } else {
+      filtered = _users.where((u) => u.age < 60).toList();
+      filtered.sort((a, b) => a.age.compareTo(b.age));
+    }
+    _filteredList = filtered;
+    _updateDisplayUsers();
+
     _isLoading = false;
 
     notifyListeners();
@@ -43,7 +58,7 @@ class UserViewModel extends ChangeNotifier {
     await Future.delayed(const Duration(milliseconds: 500));
 
     _currentPage++;
-    _applyFilter();
+    _updateDisplayUsers();
     _isLoading = false;
 
     notifyListeners();
@@ -59,15 +74,25 @@ class UserViewModel extends ChangeNotifier {
   }
 
   void search(String value) {
-    _displayUsers = _users.where((user) {
-      return user.name.toLowerCase().contains(value.toLowerCase());
-    }).toList();
+    _currentPage = 0;
+
+    if (value.isEmpty) {
+      _applyFilter();
+    } else {
+      _filteredList = _users.where((user) {
+        return user.name.toLowerCase().contains(value.toLowerCase());
+      }).toList();
+
+      _filteredList.sort((a, b) => b.age.compareTo(a.age));
+      _updateDisplayUsers();
+    }
 
     notifyListeners();
   }
 
   void filter(int type) {
     _selectedFilter = type;
+    _currentPage = 0;
 
     _applyFilter();
 
@@ -78,7 +103,7 @@ class UserViewModel extends ChangeNotifier {
     List<UserModel> filtered = [];
 
     if (_selectedFilter == 0) {
-      filtered = _users;
+      filtered = List.from(_users);
       filtered.sort((a, b) => b.age.compareTo(a.age));
     } else if (_selectedFilter == 1) {
       filtered = _users.where((u) => u.age >= 60).toList();
@@ -88,12 +113,18 @@ class UserViewModel extends ChangeNotifier {
       filtered.sort((a, b) => a.age.compareTo(b.age));
     }
 
+    _filteredList = filtered;
+    _currentPage = 0;
+    _updateDisplayUsers();
+  }
+
+  void _updateDisplayUsers() {
     int startIndex = 0;
     int endIndex = (_currentPage + 1) * _pageSize;
-    _displayUsers = filtered.sublist(
+    _displayUsers = _filteredList.sublist(
       startIndex,
-      endIndex > filtered.length ? filtered.length : endIndex,
+      endIndex > _filteredList.length ? _filteredList.length : endIndex,
     );
-    _hasMore = endIndex < filtered.length;
+    _hasMore = endIndex < _filteredList.length;
   }
 }
